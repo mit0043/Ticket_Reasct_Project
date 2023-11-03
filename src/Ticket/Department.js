@@ -50,6 +50,7 @@ function Department() {
         {
             await axios.put("https://localhost:7079/api/Department/UpdateDepartment/"+ department.find((dep) => dep.iDepartmentId === iDepartmentId).iDepartmentId || iDepartmentId,
             {
+                           
                 iDepartmentId:iDepartmentId,
                 vDepartmentName:vDepartmentName,
             }
@@ -87,7 +88,7 @@ function Department() {
         </div>
         
         <div className='container rounded border mt-4'>
-            <table className='table table-info'>
+            <table className='table table-info table-bordered table-stripped table-active'>
                 <thead>
                     <tr>
                         {/* <th>Id</th> */}
@@ -99,7 +100,7 @@ function Department() {
                         return (
                         <tbody>
                             <tr>
-                                <th scope='row'>{dep.iDepartmentId}</th>
+                                {/* <th scope='row'>{dep.iDepartmentId}</th> */}
                                 <td>{dep.vDepartmentName}</td>
                                 <td>
                                     <button type='button' className='btn btn-warning m-4' data-toggle="modal" data-target="#EditModal" onClick={() => editDepartment(dep)} >Edit</button>

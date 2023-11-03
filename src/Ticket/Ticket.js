@@ -1,6 +1,35 @@
-import React from 'react'
+import React, {useEffect, useState } from 'react'
+
+import axios from 'axios';
 
 function Ticket() {
+
+    const [ticket, setTicket]=useState([]);
+
+    const [addTicketForm, setTicketForm]=useState({
+        iTicketId:'',
+        vTicketName:'',
+        iCount:'',
+        vImage:'',
+
+    });
+    
+    useEffect(()=>{GetAllTicket();}, []);
+
+    const GetAllTicket = async () => {
+        try
+        {
+            const response = await axios.get("https://localhost:7079/api/Ticket");
+            setTicket(response.data);
+        }
+        catch(error)
+        {
+            console.error('Error fetching Tickets :', error);
+        }
+    };
+
+    
+
   return (
     <div>
         
@@ -23,9 +52,21 @@ function Ticket() {
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {/* API */}
-                </tbody>
+                {ticket.map((tiket)=>(
+                    <tbody>
+                        <tr>
+                            {/* <td>{tiket.iTicketId}</td> */}
+                            <td>{tiket.vTicketName}</td>
+                            <td>{tiket.iCount}</td>
+                            <td>{tiket.vImage}</td>
+                            <td>
+                                <button className='btn btn-info m-4'>Edit</button>
+                                <button className='btn btn-danger'>Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                ))};
             </table>
         </div>
 

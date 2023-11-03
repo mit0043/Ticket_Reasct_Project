@@ -5,7 +5,7 @@ import axios from 'axios'
 function User() {
 
     const [user, setUser]=useState([]);
-    const [departmentdropDown, SetDepartmentDropDown]=useState([]);
+    const [departmentdropDown, SetDepartmentDropDown]=useState("Select All");
     
     const [roledropDown, SetRoleDropDown]=useState([]);
 
@@ -19,27 +19,32 @@ function User() {
         dExpireDate:'',
         dRefreshDate:'',
         iDepartmentId:'',
-        iRoleId:'',
-
+        iRoleId:'', 
+        Department:'',
     });
 
-    useEffect(() => {
-        GetDepartment();
-    }, []);
+    // useEffect(() => {
+    //     GetDepartment();
+    // }, []);
 
-    const GetDepartment = async () => {
-        try{
-            const response = await axios.get("https://localhost:7079/api/User/Department");
-            SetDepartmentDropDown(response.data);
-        }
-        catch(error)
-        {
-            console.error('Error fatching Department:', error);
-        }
-    };
+    // const GetDepartment = async () => {
+    //     try{
+    //         const response = await axios.get("https://localhost:7079/api/User");
+    //         SetDepartmentDropDown(response.data);
+    //     }
+    //     catch(error)
+    //     {
+    //         console.error('Error fatching Department:', error);
+    //     }
+    // };
+
+    const handleChange = (e)=>{
+        SetDepartmentDropDown(e.target.value)
+    }
 
     useEffect(() => {
         GetAllUser();
+
     }, []);
 
     const GetAllUser= async ()=> {
@@ -75,14 +80,25 @@ function User() {
                         <th>Address</th>
                         <th>Email</th>
                         <th>RegistrationDate</th>
-                        <th>Department</th>
+                        {/* <th>Department</th>
                         <th>Role</th>
-                        <th>Action</th>
+                        <th>Action</th> */}
                     </tr>
                 </thead>
-                <tbody>
-                    {/* API */}
-                </tbody>
+                {user.map((usr)=>(
+                    <tbody>
+                        <tr>
+                            <td>{usr.vUserName}</td>
+                            <td>{usr.vAddress}</td>
+                            <td>{usr.vEmail}</td>
+                            <td>{usr.dRegistrationDate}</td>
+                            {/* <td>{user.Department.vDepartmentName}</td> */}
+
+
+                        </tr>
+                    </tbody>
+
+                ))};
             </table>
         </div>
 
@@ -136,8 +152,8 @@ function User() {
                         <label className='col-4'>Department</label>
                         <div className='col-8'>
 
-                            <select name="selectList" id="selectList" className='form-control'>
-                              <option value="option 0">Select Department</option>
+                            <select className='form-control'>
+                              <option value="option 0"></option>
                               <option value="option 1">Option 1</option>
                               <option value="option 2">Option 2</option>
                           </select>
@@ -147,7 +163,7 @@ function User() {
                     <div className='form-group row'>
                         <label className='col-4'>Role</label>
                         <div className='col-8'>
-                        <select name="selectList" id="selectList" className='form-control'>
+                        <select   className='form-control'>
                               <option value="option 0">Select Role</option>
                               <option value="option 1">Option 1</option>
                               <option value="option 2">Option 2</option>
